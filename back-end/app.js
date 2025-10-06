@@ -21,6 +21,8 @@ mongoose
 // load the dataabase models we want to deal with
 const { Message } = require('./models/Message')
 const { User } = require('./models/User')
+const { AboutUs } = require('./models/AboutUs')
+
 
 // a route to handle fetching all messages
 app.get('/messages', async (req, res) => {
@@ -57,6 +59,29 @@ app.get('/messages/:messageId', async (req, res) => {
     })
   }
 })
+
+// a route to handle about us info
+app.get('/about', async (req, res) => {
+  // load about us info
+  try {
+    res.json({
+      name: "Milan",
+      paragraphs: [
+          "Hello, my name is Milan. I am majoring in Computer Science. I have two minors: Mathematics, Web Applications and Programming",
+          "My hobbies include cooking, trying new restaurants, going to the gym, and hiking.",
+          "I also love to travel. Some of my favorite places include London, Paris, Lucerne, and Dubrovnik."
+        ],
+        image: "https://imgur.com/a/HQ2g6Sm",
+    })
+  } catch (err) {
+    console.error(err)
+    res.status(400).json({
+      error: err,
+      status: 'failed to retrieve about us info',
+    })
+  }
+})
+
 // a route to handle logging out users
 app.post('/messages/save', async (req, res) => {
   // try to save the message to the database
